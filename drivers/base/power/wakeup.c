@@ -46,6 +46,25 @@ static bool enable_netmgr_wl_ws = false;
 module_param(enable_netmgr_wl_ws, bool, 0644);
 
 /*
+* SDV: Block qpnp_fg wakelocks, 5d sensor
+*/
+
+static bool enable_qpnp_fg_update_sram_ws = false;
+module_param(enable_qpnp_fg_update_sram_ws, bool, 0644);
+
+static bool enable_qpnp_fg_memaccess_ws = false;
+module_param(enable_qpnp_fg_memaccess_ws, bool, 0644);
+
+static bool enable_sensors_qcom_ws = false;
+module_param(enable_sensors_qcom_ws, bool, 0644);
+
+static bool enable_dsps_IPCRTR_ws = false;
+module_param(enable_dsps_IPCRTR_ws, bool, 0644);
+
+
+
+
+/*
  * If set, the suspend/hibernate code will abort transitions to a sleep state
  * if wakeup events are registered during or immediately before the transition.
  */
@@ -498,10 +517,18 @@ static bool wakeup_source_blocker(struct wakeup_source *ws)
 				!strncmp(ws->name, "wlan_wake", wslen)) ||
 			(!enable_wlan_rx_wake_ws &&
 				!strncmp(ws->name, "wlan_rx_wake", wslen)) ||
+			(!enable_qpnp_fg_update_sram_ws &&
+				!strncmp(ws->name, "qpnp_fg_update_sram", wslen)) ||
+			(!enable_qpnp_fg_memaccess_ws &&
+				!strncmp(ws->name, "qpnp_fg_memaccess", wslen)) ||
+			(!enable_dsps_IPCRTR_ws &&
+				!strncmp(ws->name, "dsps_IPCRTR", wslen)) ||
+			(!enable_sensors_qcom_ws &&
+				!(strstr(ws->name, "sensors.qcom") == NULL) ) ||
 			(!enable_bluedroid_timer_ws &&
 				!strncmp(ws->name, "bluedroid_timer", wslen)) ||
 			(!enable_wlan_wow_wl_ws &&
-            	!strncmp(ws->name, "wlan_wow_wl", wslen)) ||	
+				!strncmp(ws->name, "wlan_wow_wl", wslen)) ||	
 			(!enable_wlan_ctrl_wake_ws &&
 				!strncmp(ws->name, "wlan_ctrl_wake", wslen))) {
 			if (ws->active) {
