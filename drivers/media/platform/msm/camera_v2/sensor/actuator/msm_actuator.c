@@ -278,7 +278,7 @@ static int msm_actuator_bivcm_handle_i2c_ops(
 			i2c_tbl.delay = delay;
 			a_ctrl->i2c_tbl_index++;
 
-			if(strcmp(a_ctrl->project_name,"turbo")==0)
+		if(strcmp(a_ctrl->project_name,"turbo")==0)
 			{
 				CDBG("Enter the turbo actuator setting \n");
 				if(write_arr[0].hw_mask == 0x1234)
@@ -316,7 +316,7 @@ static int msm_actuator_bivcm_handle_i2c_ops(
 			else if(strcmp(a_ctrl->project_name,"x2")==0)
 			{
 				out[0] = i2c_byte1;
-	        			out[1] = 0xd0;
+				out[1] = 0x90;
 				out[2] = 0x0;
 				out[3] = i2c_byte2 / 256;
 				out[4] = i2c_byte2 % 256;
